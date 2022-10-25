@@ -1,0 +1,59 @@
+.dashboard-container{
+    margin-top: 1rem;
+    width: 100%;
+    padding: 0.5rem 0 0.5rem 0;
+}
+.card1{
+    background-color: rgb(145, 251, 133);
+    height: 6rem;
+    margin: 0.5rem;
+    padding: 0.5rem
+}
+.card2{
+    background-color: rgb(255, 133, 133);
+    height: 6rem;
+    margin: 0.5rem;
+    padding: 0.5rem
+}
+.card3{
+    background-color: rgb(157, 211, 255);
+    height: 6rem;
+    margin: 0.5rem;
+    padding: 0.5rem
+}
+.card4{
+    background-color: rgb(174, 170, 170);
+    height: 6rem;
+    margin: 0.5rem;
+    padding: 0.5rem
+}
+.card5{
+    background-color: rgb(242, 252, 133);
+    height: 6rem;
+    margin: 0.5rem;
+    padding: 0.5rem
+}
+.card6{
+    background-color: rgb(208, 158, 255);
+    height: 6rem;
+    margin: 0.5rem;
+    padding: 0.5rem
+}
+
+.inStockchart-container{
+    margin-top: 2rem;
+    width: 100%;
+    text-align: center;
+}
+
+.soldStockchart-container{
+    margin-top: 2rem;
+    width: 100%;
+}
+
+.chart{
+    margin: 0.5rem;
+    padding: 0.5rem
+}
+
+

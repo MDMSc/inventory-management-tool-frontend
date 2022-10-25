@@ -1,0 +1,42 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+    position: relative;
+  }
+  
+  thead tr th {
+    font-weight: 500;
+    text-align: left;
+    background-color: #fafafa;
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: #fafafa;
+  }
+  
+  th,
+  td {
+    padding: 8px;
+    overflow-wrap: break-word;
+  }
+  
+  .pagination-bar {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .search-filter-area{
+    margin: 2rem 0 2rem 0;
+  }
+  .search-filter-area input{
+    width:30%
+  }
+  .search-filter-area label{
+    width:auto
+  }
+  .search-filter-area input, button, label, select{
+    display: inline-block;
+  }
+  Input, label, Button{
+    margin:0 4px;
+  }
