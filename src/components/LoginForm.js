@@ -6,13 +6,14 @@ import { Alert } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
 import ParentContext from '../reducer/Context';
 import { IS_ADMIN, IS_LOGGED } from '../reducer/Action.type';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const LoginForm = () => {
   const context = useContext(ParentContext);
   const [error, setError] = useState("");
   const navigate = useNavigate();
   return (
-  <div>
+  <div className='container'>
     {error !== "" ? <Alert color="danger">{error}</Alert> : ""}
     <Formik
       initialValues={{
@@ -59,7 +60,8 @@ const LoginForm = () => {
       }}
     >
       {({ errors, touched }) => (
-        <Form className='log-in'>
+        <div className='row'>
+        <Form className='col-xs-12 col-sm-12 col-md-12 col-lg-4 log-in'>
           <h2>Login</h2>
           <label>Username</label>
           <Field name="username" />
@@ -70,6 +72,7 @@ const LoginForm = () => {
 
           <button type="submit" className='btn-submit'>Submit</button>
         </Form>
+        </div>
       )}
     </Formik>
   </div>

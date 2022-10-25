@@ -1,6 +1,34 @@
 .log-in{
     margin: 0 auto;
-    width: 25%;
+    /* width: 25%; */
     background: #dedede;
-    padding: 40px;
+    padding: 4rem;
 }
+
+/* ------------Media Query----------- */
+/* @media (max-width: 576px) { 
+    .log-in{
+        width: 75%;
+        padding: 1rem
+    }
+ }
+
+@media (max-width: 768px) { 
+    .log-in{
+        width: 50%;
+        padding: 2rem
+    }
+ }
+
+@media (max-width: 992px) { 
+    .log-in{
+        width: 25%;
+        padding: 2rem
+    }
+ } */
+
+/* @media (min-width: 1200px) { 
+    .log-in{
+        width: 25%
+    }
+ } */
