@@ -1,1 +1,1 @@
-export const API = 'https://im-tool-backend.herokuapp.com';
+export const API = 'https://inv-tool-api.onrender.com';
