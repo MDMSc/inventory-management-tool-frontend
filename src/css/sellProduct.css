@@ -1,0 +1,8 @@
+.searchList_p{
+    width: 100%;
+}
+
+.searchList_p:hover{
+    border: 1px solid grey;
+    cursor: pointer;
+}

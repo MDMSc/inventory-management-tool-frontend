@@ -41,6 +41,7 @@ const Pagination = props => {
           disabled: currentPage === 1
         })}
         onClick={onPrevious}
+        style={{ cursor: 'pointer' }}
       >
         <div className="arrow left" />
       </li>
@@ -55,6 +56,7 @@ const Pagination = props => {
               selected: pageNumber === currentPage
             })}
             onClick={() => onPageChange(pageNumber)}
+            style={{ cursor: 'pointer' }}
           >
             {pageNumber}
           </li>
@@ -65,6 +67,7 @@ const Pagination = props => {
           disabled: currentPage === lastPage
         })}
         onClick={onNext}
+        style={{ cursor: 'pointer' }}
       >
         <div className="arrow right" />
       </li>

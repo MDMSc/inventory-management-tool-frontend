@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Pagination from "./Pagination";
 import "../css/table.css";
 import { Input, Button, Row, Col, InputGroup, Table, Alert, Tooltip } from "reactstrap";
@@ -11,6 +11,7 @@ import { HiPencil } from "react-icons/hi";
 import { ImBin } from "react-icons/im";
 import { AiOutlinePlus } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import ParentContext from "../reducer/Context";
 
 let PageSize = 5;
 
@@ -27,9 +28,11 @@ export default function ProductTable(args) {
   const [isSort, setIsSort] = useState(false);
   const [sortType, setSortType] = useState("");
   const [searchText, setSearchText] = useState("");
+  const [tooltipOpen, setTooltipOpen] = useState(false);
+
   let urlQuery = "";
   const navigate = useNavigate();
-  const [tooltipOpen, setTooltipOpen] = useState(false);
+  const context = useContext(ParentContext);
 
   const toggle = () => setTooltipOpen(!tooltipOpen);
 
@@ -58,49 +61,49 @@ export default function ProductTable(args) {
       });
   }
 
-  useEffect(() => {
-    async function getProducts() {
-      if (type !== "select" && type !== "") {
-        urlQuery += `&&type=${type}`;
-      }
-      if (brand !== "select" && brand !== "") {
-        urlQuery += `&&brand=${brand}`;
-      }
-      if (searchText !== "") {
-        urlQuery += `&&search=${searchText}`;
-      }
-      if (isSort) {
-        urlQuery += `&&sort=${sortType}`;
-      }
-
-      const result = await fetch(
-        `${API}/assets?page=${currentPage}${urlQuery}`,
-        {
-          method: "GET",
-        }
-      );
-      const data = await result.json();
-      setIsLoading(false);
-      setCurrentTableData({ ...data, status: result.status });
-
-      try {
-        if (result.ok === true) {
-          if (result.status === 200) {
-            return;
-          } else {
-            setError(result.statusText);
-            setIsLoading(true);
-          }
-        } else {
-          setError("Product " + result.statusText + ". Kindly refresh the page.");
-          setIsLoading(true);
-        }
-      } catch (err) {
-        setError(err.message);
-        setIsLoading(true);
-      }
+  async function getProducts() {
+    if (type !== "select" && type !== "") {
+      urlQuery += `&&type=${type}`;
+    }
+    if (brand !== "select" && brand !== "") {
+      urlQuery += `&&brand=${brand}`;
+    }
+    if (searchText !== "") {
+      urlQuery += `&&search=${searchText}`;
+    }
+    if (isSort) {
+      urlQuery += `&&sort=${sortType}`;
     }
 
+    const result = await fetch(
+      `${API}/assets?page=${currentPage}${urlQuery}`,
+      {
+        method: "GET",
+      }
+    );
+    const data = await result.json();
+    setIsLoading(false);
+    setCurrentTableData({ ...data, status: result.status });
+
+    try {
+      if (result.ok === true) {
+        if (result.status === 200) {
+          return;
+        } else {
+          setError(result.statusText);
+          setIsLoading(true);
+        }
+      } else {
+        setError("Product " + result.statusText + ". Kindly refresh the page.");
+        setIsLoading(true);
+      }
+    } catch (err) {
+      setError(err.message);
+      setIsLoading(true);
+    }
+  }
+  
+  useEffect(() => {
     getProducts();
   }, [isLoading, currentPage]);
 
@@ -112,7 +115,7 @@ export default function ProductTable(args) {
       if (isLoading === false) {
         currentTableData &&
           currentTableData.filters &&
-          currentTableData.filters.map((item) => {
+          currentTableData.filters.forEach((item) => {
             if (!types.includes(item.type)) {
               types.push(item.type);
             }
@@ -305,7 +308,11 @@ export default function ProductTable(args) {
                       >
                         <AiFillEye color="purple" />
                       </Button>{" "}
-                      <Button
+
+                      {
+                        context.state.isAdmin && (
+                          <>
+                            <Button
                         color="dark"
                         outline
                         size="sm"
@@ -315,6 +322,7 @@ export default function ProductTable(args) {
                       >
                         <HiPencil color="green" />
                       </Button>{" "}
+
                       <Button
                         color="dark"
                         outline
@@ -328,6 +336,10 @@ export default function ProductTable(args) {
                       >
                         <ImBin color="red" />
                       </Button>
+                          </>
+                        )
+                      }
+                      
                     </td>
                   </tr>
                 );

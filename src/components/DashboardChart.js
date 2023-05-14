@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Alert, Input } from "reactstrap";
+import { Row, Col, Alert, Input, Button } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../css/dashboard.css";
 import { API } from "../Global";
 import BarChart from "./BarChart";
 import PieChart from "./PieChart";
+import { AiOutlineUserAdd } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
 export default function DashboardChart() {
   const [inStock, setInStock] = useState({});
@@ -12,7 +14,9 @@ export default function DashboardChart() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
   const [year, setYear] = useState("");
+
   let urlQuery = "";
+  const navigate = useNavigate();
 
   async function getData() {
     if (year !== "") {
@@ -46,11 +50,11 @@ export default function DashboardChart() {
   let piedata = [];
   if (Object.keys(inStock).length) {
     if (!isLoading) {
-        inStock &&
+      inStock &&
         inStock.inStockQtyByType &&
-        inStock.inStockQtyByType.map((item) => {
-        pieLabels.push(item._id);
-        piedata.push(item.count);
+        inStock.inStockQtyByType.forEach((item) => {
+          pieLabels.push(item._id);
+          piedata.push(item.count);
         });
     }
   }
@@ -61,7 +65,7 @@ export default function DashboardChart() {
     if (!isLoading) {
       soldStock &&
         soldStock.soldStockQtyByType &&
-        soldStock.soldStockQtyByType.map((item) => {
+        soldStock.soldStockQtyByType.forEach((item) => {
           labels.push(item._id);
           data.push(item.count);
         });
@@ -76,7 +80,7 @@ export default function DashboardChart() {
       if (!soldStock.totalSellByMonth[0].hasOwnProperty("message")) {
         soldStock &&
           soldStock.totalSellByMonth &&
-          soldStock.totalSellByMonth.map((item) => {
+          soldStock.totalSellByMonth.forEach((item) => {
             date = new Date();
             date.setMonth(parseInt(item._id) - 1);
             month = date.toLocaleString("en-US", {
@@ -98,6 +102,14 @@ export default function DashboardChart() {
       ) : (
         <div>
           <div className="dashboard-container">
+            <Button
+              color="light"
+              style={{ padding: "0.5rem", marginBottom: "1rem" }}
+              onClick={() => navigate("/add-user")}
+            >
+              <AiOutlineUserAdd />{" "}Add user
+            </Button>
+
             <Row className="row-cols-lg-auto g-3 align-items-center">
               <Col lg={4} md={4} sm={12}>
                 <div className="card1">
@@ -163,13 +175,13 @@ export default function DashboardChart() {
               </Col>
             </Row>
           </div>
- 
+
           <div className="inStockchart-container">
             <Row className="row-cols-lg-auto g-3 align-items-center">
               <Col lg={6} md={6} sm={12}>
                 <div className="chart">
-                    <h5>Pie Chart of In-Stock Products By Type</h5>
-                {pieLabels.length && piedata.length && (
+                  <h5>Pie Chart of In-Stock Products By Type</h5>
+                  {pieLabels.length && piedata.length && (
                     <PieChart
                       labels={pieLabels}
                       title="Pie Chart of In-Stock Products By Type"

@@ -9,35 +9,35 @@ export default function ProductView() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    async function getProducts() {
-      const result = await fetch(`${API}/assets/get-asset/${productID}`, {
-        method: "GET",
-      });
-      const data = await result.json();
-      if (isLoading && Object.keys(data).length) {
-        setIsLoading(false);
-        setProduct({ ...data });
-      }
-
-      try {
-        if (result.ok === true) {
-          if (result.status === 200) {
-            return;
-          } else {
-            setError(result.statusText);
-            setIsLoading(true);
-          }
-        } else {
-          setError(`Product ${productID}` + result.statusText);
-          setIsLoading(true);
-        }
-      } catch (err) {
-        setError(err.message);
-        setIsLoading(true);
-      }
+  async function getProducts() {
+    const result = await fetch(`${API}/assets/get-asset/${productID}`, {
+      method: "GET",
+    });
+    const data = await result.json();
+    if (isLoading && Object.keys(data).length) {
+      setIsLoading(false);
+      setProduct({ ...data });
     }
 
+    try {
+      if (result.ok === true) {
+        if (result.status === 200) {
+          return;
+        } else {
+          setError(result.statusText);
+          setIsLoading(true);
+        }
+      } else {
+        setError(`Product ${productID}` + result.statusText);
+        setIsLoading(true);
+      }
+    } catch (err) {
+      setError(err.message);
+      setIsLoading(true);
+    }
+  }
+  
+  useEffect(() => {
     getProducts();
 
   }, [isLoading, productID]);
